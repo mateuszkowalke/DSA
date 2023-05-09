@@ -3,6 +3,9 @@
 #include <string.h>
 #include <strings.h>
 
+#define FNV_PRIME 7
+#define FNV_OFFSET 7
+
 typedef struct entry {
   char *key;
   void *obj;
@@ -13,6 +16,7 @@ typedef struct _hashmap {
   uint32_t size;
   hashfunc *hf;
   entry **entries;
+  uint64_t collisions;
 } hashmap;
 
 static size_t hash(hashmap *hm, const char *key) {
@@ -33,6 +37,7 @@ hashmap *hashmap_create(uint32_t size, hashfunc *hf) {
   hm->size = size;
   hm->hf = hf;
   hm->entries = calloc(sizeof(entry *), size);
+  hm->collisions = 0;
   return hm;
 }
 
@@ -65,8 +70,10 @@ void hashmap_print(hashmap *hm) {
   printf("End\n\n");
 }
 
-// hashmap_insert makes it's own copy of key, so the argument passed can be freed at will by the caller
-// caller takes the responsibility for freeing the obj argument after deleting it from hashmap and also making sure it lives long enough (while the obj is in hashmap)
+// hashmap_insert makes it's own copy of key, so the argument passed can be
+// freed at will by the caller caller takes the responsibility for freeing the
+// obj argument after deleting it from hashmap and also making sure it lives
+// long enough (while the obj is in hashmap)
 bool hashmap_insert(hashmap *hm, const char *key, void *obj) {
   if (NULL == hm || NULL == key || NULL == obj ||
       hashmap_lookup(hm, key) != NULL)
@@ -114,4 +121,31 @@ void *hashmap_delete(hashmap *hm, const char *key) {
     prev->next = free_entry(e);
   }
   return result;
+}
+
+uint64_t hash_fnv0 (const char* key, size_t len) {
+    uint64_t hash = 0;
+    for (int i = 0; i < len; i++) {
+        hash *= FNV_PRIME;
+        hash ^= key[i];
+    }
+    return hash;
+}
+
+uint64_t hash_fnv1 (const char* key, size_t len) {
+    uint64_t hash = FNV_OFFSET;
+    for (int i = 0; i < len; i++) {
+        hash *= FNV_PRIME;
+        hash ^= key[i];
+    }
+    return hash;
+}
+
+uint64_t hash_fnv1a (const char* key, size_t len) {
+    uint64_t hash = FNV_OFFSET;
+    for (int i = 0; i < len; i++) {
+        hash ^= key[i];
+        hash *= FNV_PRIME;
+    }
+    return hash;
 }

@@ -19,7 +19,7 @@ release: CFLAGS=-Wall -O2 -DNDEBUG
 release: clean
 release: $(TARGET)
 
-$(TARGET): $(OBJS)
+$(TARGET): $(OBJ) $(BIN) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
 
 $(OBJ)/%.o: $(SRC)/%.c
@@ -31,7 +31,13 @@ $(TEST)/bin/%: $(TEST)/%.c
 test: $(OBJS) $(TEST)/bin $(TESTBINS)
 	for test in $(TESTBINS) ; do ./$$test ; done
 
-$(test)/bin:
+$(TEST)/bin:
+	mkdir $@
+
+$(OBJ):
+	mkdir $@
+
+$(BIN):
 	mkdir $@
 
 clean:

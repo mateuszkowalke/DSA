@@ -16,10 +16,10 @@ Node *get_prev_at(Linked_list *ll, size_t i) {
     return NULL;
   }
   if (i == 0) {
-      Node *prev = malloc(sizeof(Node));
-      prev->data = NULL;
-      prev->next = ll->head;
-      return prev;
+    Node *prev = malloc(sizeof(Node));
+    prev->data = NULL;
+    prev->next = ll->head;
+    return prev;
   }
   Node *curr = ll->head;
   Node *prev = NULL;
@@ -28,6 +28,21 @@ Node *get_prev_at(Linked_list *ll, size_t i) {
     curr = curr->next;
   }
   return prev;
+}
+
+void remove_node(Linked_list *ll, Node *curr, Node *prev) {
+  ll->size--;
+  if (curr == ll->head) {
+    ll->head = curr->next;
+    return;
+  }
+  if (curr == ll->tail) {
+    ll->tail = prev;
+    ll->tail->next = NULL;
+    return;
+  }
+  prev->next = curr->next;
+  return;
 }
 
 // attaches new node at specified index
@@ -49,18 +64,18 @@ int insert_at_ll(Linked_list *ll, void *data, size_t i) {
   new->data = data;
   Node *prev = get_prev_at(ll, i);
   if (prev == NULL) {
-      return -1;
-  } 
+    return -1;
+  }
   ll->size++;
   if (prev->data == NULL) {
-      new->next = ll->head;
-      ll->head = new;
+    new->next = ll->head;
+    ll->head = new;
   } else if (prev->next->next == NULL) {
-      ll->tail->next = new;
-      ll->tail = new;
+    ll->tail->next = new;
+    ll->tail = new;
   } else {
-      new->next = prev->next->next;
-      prev->next = new;
+    new->next = prev->next->next;
+    prev->next = new;
   }
   return 0;
 }
@@ -113,15 +128,7 @@ int remove_ll(Linked_list *ll, Node *node) {
   Node *prev = NULL;
   while (curr != NULL) {
     if (curr->data == node->data) {
-      if (prev != NULL) {
-        prev->next = curr->next;
-      } else {
-        ll->head = curr->next;
-      }
-      if (curr->next == NULL) {
-        ll->tail = prev;
-      }
-      ll->size--;
+      remove_node(ll, curr, prev);
       return 0;
     }
     prev = curr;
@@ -135,21 +142,10 @@ int remove_ll(Linked_list *ll, Node *node) {
 int remove_at_ll(Linked_list *ll, size_t i) {
   Node *prev = get_prev_at(ll, i);
   if (prev == NULL) {
-      return -1;
+    return -1;
   }
   Node *curr = prev->next;
-  
-  ll->size--;
-  if (curr == ll->head) {
-    ll->head = curr->next;
-    return 0;
-  }
-  if (curr == ll->tail) {
-    ll->tail = prev;
-    ll->tail->next = NULL;
-    return 0;
-  }
-  prev->next = curr->next;
+  remove_node(ll, curr, prev);
   return 0;
 }
 
@@ -158,7 +154,7 @@ int remove_at_ll(Linked_list *ll, size_t i) {
 void *get(Linked_list *ll, size_t i) {
   Node *prev = get_prev_at(ll, i);
   if (prev == NULL) {
-      return NULL;
+    return NULL;
   }
   return prev->next->data;
 }

@@ -11,18 +11,18 @@ Linked_list *new_ll() {
 // in case index == 0 it returns node with NULL data
 // in case of getting out of linked list bounds returns NULL
 // this works on assumption, that valid node always has non-NULL data!!!!!!
-Node *get_prev_at(Linked_list *ll, size_t i) {
+Node_ll *get_prev_at(Linked_list *ll, size_t i) {
   if (ll->size <= i || ll->size == 0) {
     return NULL;
   }
   if (i == 0) {
-    Node *prev = malloc(sizeof(Node));
+    Node_ll *prev = malloc(sizeof(Node_ll));
     prev->data = NULL;
     prev->next = ll->head;
     return prev;
   }
-  Node *curr = ll->head;
-  Node *prev = NULL;
+  Node_ll *curr = ll->head;
+  Node_ll *prev = NULL;
   for (; curr != NULL && i > 0; i--) {
     prev = curr;
     curr = curr->next;
@@ -30,7 +30,7 @@ Node *get_prev_at(Linked_list *ll, size_t i) {
   return prev;
 }
 
-void remove_node(Linked_list *ll, Node *curr, Node *prev) {
+void remove_node(Linked_list *ll, Node_ll *curr, Node_ll *prev) {
   ll->size--;
   if (curr == ll->head) {
     ll->head = curr->next;
@@ -57,12 +57,12 @@ int insert_at_ll(Linked_list *ll, void *data, size_t i) {
   if (i >= ll->size) {
     return -1;
   }
-  Node *new = malloc(sizeof(Node));
+  Node_ll *new = malloc(sizeof(Node_ll));
   if (new == NULL) {
     return -1;
   }
   new->data = data;
-  Node *prev = get_prev_at(ll, i);
+  Node_ll *prev = get_prev_at(ll, i);
   if (prev == NULL) {
     return -1;
   }
@@ -83,7 +83,7 @@ int insert_at_ll(Linked_list *ll, void *data, size_t i) {
 // attaches new node at the end of linked list
 // returns -1 for failure and 0 for success
 int append_ll(Linked_list *ll, void *data) {
-  Node *new = malloc(sizeof(Node));
+  Node_ll *new = malloc(sizeof(Node_ll));
   if (new == NULL) {
     return -1;
   }
@@ -102,7 +102,7 @@ int append_ll(Linked_list *ll, void *data) {
 // prepends new node to the beginning of linked list
 // returns -1 for failure and 0 for success
 int prepend_ll(Linked_list *ll, void *data) {
-  Node *new = malloc(sizeof(Node));
+  Node_ll *new = malloc(sizeof(Node_ll));
   if (new == NULL) {
     return -1;
   }
@@ -120,12 +120,12 @@ int prepend_ll(Linked_list *ll, void *data) {
 
 // removes node with the same data from linked list
 // returns -1 for failure and 0 for success
-int remove_ll(Linked_list *ll, Node *node) {
+int remove_ll(Linked_list *ll, Node_ll *node) {
   if (ll->head == NULL) {
     return -1;
   }
-  Node *curr = ll->head;
-  Node *prev = NULL;
+  Node_ll *curr = ll->head;
+  Node_ll *prev = NULL;
   while (curr != NULL) {
     if (curr->data == node->data) {
       remove_node(ll, curr, prev);
@@ -140,11 +140,11 @@ int remove_ll(Linked_list *ll, Node *node) {
 // removes node from specified index from linked list
 // returns -1 for failure and 0 for success
 int remove_at_ll(Linked_list *ll, size_t i) {
-  Node *prev = get_prev_at(ll, i);
+  Node_ll *prev = get_prev_at(ll, i);
   if (prev == NULL) {
     return -1;
   }
-  Node *curr = prev->next;
+  Node_ll *curr = prev->next;
   remove_node(ll, curr, prev);
   return 0;
 }
@@ -152,7 +152,7 @@ int remove_at_ll(Linked_list *ll, size_t i) {
 // gets node's data from specified index from linked list
 // returns NULL for error
 void *get(Linked_list *ll, size_t i) {
-  Node *prev = get_prev_at(ll, i);
+  Node_ll *prev = get_prev_at(ll, i);
   if (prev == NULL) {
     return NULL;
   }

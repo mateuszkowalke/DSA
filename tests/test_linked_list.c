@@ -61,7 +61,7 @@ Test(linked_list, should_properly_remove_node_at_the_beginning_by_value) {
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
-  Node *node = malloc(sizeof(Node));
+  Node_ll *node = malloc(sizeof(Node_ll));
   node->data = (void *)&data2;
   int res = remove_ll(ll, node);
   cr_expect(res != -1);
@@ -78,7 +78,7 @@ Test(linked_list, should_properly_remove_node_at_the_end_by_value) {
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data2);
-  Node *node = malloc(sizeof(Node));
+  Node_ll *node = malloc(sizeof(Node_ll));
   node->data = (void *)&data2;
   int res = remove_ll(ll, node);
   cr_expect(res != -1);
@@ -95,7 +95,7 @@ Test(linked_list, should_properly_remove_node_in_the_middle_by_value) {
   append_ll(ll, (void *)&data2);
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
-  Node *node = malloc(sizeof(Node));
+  Node_ll *node = malloc(sizeof(Node_ll));
   node->data = (void *)&data2;
   int res = remove_ll(ll, node);
   cr_expect(res != -1);
@@ -113,7 +113,7 @@ Test(linked_list, should_properly_remove_node_at_the_beginning_by_index) {
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
-  Node *node = malloc(sizeof(Node));
+  Node_ll *node = malloc(sizeof(Node_ll));
   node->data = (void *)&data2;
   int res = remove_at_ll(ll, 0);
   cr_expect(res != -1);
@@ -130,7 +130,7 @@ Test(linked_list, should_properly_remove_node_at_the_end_by_index) {
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data2);
-  Node *node = malloc(sizeof(Node));
+  Node_ll *node = malloc(sizeof(Node_ll));
   node->data = (void *)&data2;
   int res = remove_at_ll(ll, 4);
   cr_expect(res != -1);
@@ -147,7 +147,7 @@ Test(linked_list, should_properly_remove_node_in_the_middle_by_index) {
   append_ll(ll, (void *)&data2);
   append_ll(ll, (void *)&data1);
   append_ll(ll, (void *)&data1);
-  Node *node = malloc(sizeof(Node));
+  Node_ll *node = malloc(sizeof(Node_ll));
   node->data = (void *)&data2;
   int res = remove_at_ll(ll, 2);
   cr_expect(res != -1);

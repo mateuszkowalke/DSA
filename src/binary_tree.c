@@ -1,13 +1,20 @@
 #include "binary_tree.h"
 
-void traverse_pre_order(Binary_tree *bt) {
+void depth_first_traversal(Binary_tree *bt) {
   printf("%s\n", (char *)bt->data);
   if (bt->left != NULL) {
-    traverse_pre_order(bt->left);
+    depth_first_traversal(bt->left);
   }
   if (bt->right != NULL) {
-    traverse_pre_order(bt->right);
+    depth_first_traversal(bt->right);
   }
 }
-void traverse_in_order(Binary_tree *bt);
-void traverse_post_order(Binary_tree *bt);
+
+void breadth_first_traversal(Binary_tree *bt) {
+    Queue *q = malloc(sizeof(Queue));
+    enqueue(q, bt);
+    /* Node_bt *n; */
+    /* while((n = dequeue(q)) != NULL) { */
+    /*  */
+    /* } */
+}

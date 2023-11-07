@@ -14,3 +14,4 @@ typedef Node_bt Binary_tree;
 Binary_tree *new_bt();
 void depth_first_traversal(Binary_tree *bt);
 void breadth_first_traversal(Binary_tree *bt);
+int int_compare_binary_trees(Binary_tree *bt1, Binary_tree *bt2);

@@ -1,15 +1,22 @@
 #include <stdlib.h>
 
-typedef struct Node {
-  int data;
-  struct Node *next;
-} Node;
+#ifndef QUEUE
+#define QUEUE
+
+typedef struct Node_q {
+  void *data;
+  struct Node_q *next;
+} Node_q;
 
 typedef struct Queue {
-  struct Node *head;
-  struct Node *tail;
+  struct Node_q *head;
+  struct Node_q *tail;
+  size_t len;
 } Queue;
 
-void enqueue(Queue *q, int data);
-Node *dequeue(Queue *q);
-int peek(Queue *q);
+Queue *new_queue();
+int enqueue(Queue *q, void *data);
+int dequeue(Queue *q, void **data);
+void *peek(Queue *q);
+
+#endif

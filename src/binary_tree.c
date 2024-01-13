@@ -117,6 +117,7 @@ int int_check_child(Binary_tree *parent, Binary_tree *to_remove, int isleft,
   }
   int curr = *(int *)to_remove->data;
   if (curr == v) {
+    // to_remove has no children
     if (to_remove->left == NULL && to_remove->right == NULL) {
       if (isleft) {
         free(parent->left);
@@ -128,10 +129,10 @@ int int_check_child(Binary_tree *parent, Binary_tree *to_remove, int isleft,
       return 1;
     }
     // TODO
-    // more tests
     // refactor
     // balancing
     if (to_remove->left != NULL && to_remove->right != NULL) {
+      // case when the left child of to_remove has no children
       if (to_remove->left->left == NULL && to_remove->left->right == NULL) {
         to_remove->left->right = to_remove->right;
         if (isleft) {
@@ -148,13 +149,15 @@ int int_check_child(Binary_tree *parent, Binary_tree *to_remove, int isleft,
         biggest_on_left_parent = biggest_on_left;
         biggest_on_left = biggest_on_left->right;
       }
-      if (biggest_on_left->left != NULL) {
+      if (biggest_on_left->left != NULL &&
+          biggest_on_left_parent != to_remove) {
         biggest_on_left_parent->right = biggest_on_left->left;
-      } else {
+      } else if (biggest_on_left_parent != to_remove) {
         biggest_on_left_parent->right = NULL;
       }
-      biggest_on_left->left =
-          to_remove->left == biggest_on_left->left ? NULL : to_remove->left;
+      biggest_on_left->left = biggest_on_left_parent == to_remove
+                                  ? biggest_on_left->left
+                                  : to_remove->left;
       biggest_on_left->right = to_remove->right;
       if (isleft) {
         parent->left = biggest_on_left;
@@ -164,6 +167,7 @@ int int_check_child(Binary_tree *parent, Binary_tree *to_remove, int isleft,
       free(to_remove);
       return 1;
     }
+    // to_remove has only left child case
     if (to_remove->left != NULL) {
       Binary_tree *tmp = to_remove;
       if (isleft) {
@@ -174,6 +178,7 @@ int int_check_child(Binary_tree *parent, Binary_tree *to_remove, int isleft,
       free(tmp);
       return 1;
     }
+    // to_remove has only right child case
     if (to_remove->right != NULL) {
       Binary_tree *tmp = to_remove;
       if (isleft) {

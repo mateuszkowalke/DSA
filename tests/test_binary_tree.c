@@ -520,6 +520,224 @@ Binary_tree *test_search_tree_deletion_data_8() {
   return root;
 }
 
+Binary_tree *test_search_tree_for_delete_data_8_no_left() {
+  Binary_tree *root = malloc(sizeof(Binary_tree));
+  int *data1 = malloc(sizeof(int));
+  *data1 = 1;
+  int *data2 = malloc(sizeof(int));
+  *data2 = 2;
+  int *data3 = malloc(sizeof(int));
+  *data3 = 3;
+  int *data4 = malloc(sizeof(int));
+  *data4 = 4;
+  int *data5 = malloc(sizeof(int));
+  *data5 = 5;
+  int *data6 = malloc(sizeof(int));
+  *data6 = 6;
+  int *data7 = malloc(sizeof(int));
+  *data7 = 7;
+  int *data8 = malloc(sizeof(int));
+  *data8 = 8;
+  int *data9 = malloc(sizeof(int));
+  *data9 = 9;
+  int *data10 = malloc(sizeof(int));
+  *data10 = 10;
+  int *data11 = malloc(sizeof(int));
+  *data11 = 11;
+  root->data = data4;
+  root->left = malloc(sizeof(Node_bt));
+  root->left->data = data2;
+  root->right = malloc(sizeof(Node_bt));
+  root->right->data = data8;
+  root->left->left = malloc(sizeof(Node_bt));
+  root->left->left->data = data1;
+  root->left->left->left = NULL;
+  root->left->left->right = NULL;
+  root->left->right = malloc(sizeof(Node_bt));
+  root->left->right->data = data3;
+  root->left->right->left = NULL;
+  root->left->right->right = NULL;
+  root->right->left = malloc(sizeof(Node_bt));
+  root->right->left->data = data6;
+  root->right->left->left = NULL;
+  root->right->left->right = malloc(sizeof(Node_bt));
+  root->right->left->right->left = NULL;
+  root->right->left->right->right = NULL;
+  root->right->left->right->data = data7;
+  root->right->right = malloc(sizeof(Node_bt));
+  root->right->right->data = data10;
+  root->right->right->left = malloc(sizeof(Node_bt));
+  root->right->right->left->left = NULL;
+  root->right->right->left->right = NULL;
+  root->right->right->left->data = data9;
+  root->right->right->right = malloc(sizeof(Node_bt));
+  root->right->right->right->left = NULL;
+  root->right->right->right->right = NULL;
+  root->right->right->right->data = data11;
+  return root;
+}
+
+Binary_tree *test_search_tree_deletion_data_8_no_left() {
+  Binary_tree *root = malloc(sizeof(Binary_tree));
+  int *data1 = malloc(sizeof(int));
+  *data1 = 1;
+  int *data2 = malloc(sizeof(int));
+  *data2 = 2;
+  int *data3 = malloc(sizeof(int));
+  *data3 = 3;
+  int *data4 = malloc(sizeof(int));
+  *data4 = 4;
+  int *data5 = malloc(sizeof(int));
+  *data5 = 5;
+  int *data6 = malloc(sizeof(int));
+  *data6 = 6;
+  int *data7 = malloc(sizeof(int));
+  *data7 = 7;
+  int *data9 = malloc(sizeof(int));
+  *data9 = 9;
+  int *data10 = malloc(sizeof(int));
+  *data10 = 10;
+  int *data11 = malloc(sizeof(int));
+  *data11 = 11;
+  root->data = data4;
+  root->left = malloc(sizeof(Node_bt));
+  root->left->data = data2;
+  root->right = malloc(sizeof(Node_bt));
+  root->right->data = data7;
+  root->left->left = malloc(sizeof(Node_bt));
+  root->left->left->data = data1;
+  root->left->left->left = NULL;
+  root->left->left->right = NULL;
+  root->left->right = malloc(sizeof(Node_bt));
+  root->left->right->data = data3;
+  root->left->right->left = NULL;
+  root->left->right->right = NULL;
+  root->right->left = malloc(sizeof(Node_bt));
+  root->right->left->data = data6;
+  root->right->left->left = NULL;
+  root->right->left->right = NULL;
+  root->right->right = malloc(sizeof(Node_bt));
+  root->right->right->data = data10;
+  root->right->right->left = malloc(sizeof(Node_bt));
+  root->right->right->left->left = NULL;
+  root->right->right->left->right = NULL;
+  root->right->right->left->data = data9;
+  root->right->right->right = malloc(sizeof(Node_bt));
+  root->right->right->right->left = NULL;
+  root->right->right->right->right = NULL;
+  root->right->right->right->data = data11;
+  return root;
+}
+
+Binary_tree *test_search_tree_for_delete_data_8_no_right() {
+  Binary_tree *root = malloc(sizeof(Binary_tree));
+  int *data1 = malloc(sizeof(int));
+  *data1 = 1;
+  int *data2 = malloc(sizeof(int));
+  *data2 = 2;
+  int *data3 = malloc(sizeof(int));
+  *data3 = 3;
+  int *data4 = malloc(sizeof(int));
+  *data4 = 4;
+  int *data5 = malloc(sizeof(int));
+  *data5 = 5;
+  int *data6 = malloc(sizeof(int));
+  *data6 = 6;
+  int *data7 = malloc(sizeof(int));
+  *data7 = 7;
+  int *data8 = malloc(sizeof(int));
+  *data8 = 8;
+  int *data9 = malloc(sizeof(int));
+  *data9 = 9;
+  int *data10 = malloc(sizeof(int));
+  *data10 = 10;
+  int *data11 = malloc(sizeof(int));
+  *data11 = 11;
+  root->data = data4;
+  root->left = malloc(sizeof(Node_bt));
+  root->left->data = data2;
+  root->right = malloc(sizeof(Node_bt));
+  root->right->data = data8;
+  root->left->left = malloc(sizeof(Node_bt));
+  root->left->left->data = data1;
+  root->left->left->left = NULL;
+  root->left->left->right = NULL;
+  root->left->right = malloc(sizeof(Node_bt));
+  root->left->right->data = data3;
+  root->left->right->left = NULL;
+  root->left->right->right = NULL;
+  root->right->left = malloc(sizeof(Node_bt));
+  root->right->left->data = data6;
+  root->right->left->left = malloc(sizeof(Node_bt));
+  root->right->left->left->left = NULL;
+  root->right->left->left->right = NULL;
+  root->right->left->left->data = data5;
+  root->right->left->right = NULL;
+  root->right->right = malloc(sizeof(Node_bt));
+  root->right->right->data = data10;
+  root->right->right->left = malloc(sizeof(Node_bt));
+  root->right->right->left->left = NULL;
+  root->right->right->left->right = NULL;
+  root->right->right->left->data = data9;
+  root->right->right->right = malloc(sizeof(Node_bt));
+  root->right->right->right->left = NULL;
+  root->right->right->right->right = NULL;
+  root->right->right->right->data = data11;
+  return root;
+}
+
+Binary_tree *test_search_tree_deletion_data_8_no_right() {
+  Binary_tree *root = malloc(sizeof(Binary_tree));
+  int *data1 = malloc(sizeof(int));
+  *data1 = 1;
+  int *data2 = malloc(sizeof(int));
+  *data2 = 2;
+  int *data3 = malloc(sizeof(int));
+  *data3 = 3;
+  int *data4 = malloc(sizeof(int));
+  *data4 = 4;
+  int *data5 = malloc(sizeof(int));
+  *data5 = 5;
+  int *data6 = malloc(sizeof(int));
+  *data6 = 6;
+  int *data7 = malloc(sizeof(int));
+  *data7 = 7;
+  int *data9 = malloc(sizeof(int));
+  *data9 = 9;
+  int *data10 = malloc(sizeof(int));
+  *data10 = 10;
+  int *data11 = malloc(sizeof(int));
+  *data11 = 11;
+  root->data = data4;
+  root->left = malloc(sizeof(Node_bt));
+  root->left->data = data2;
+  root->right = malloc(sizeof(Node_bt));
+  root->right->data = data6;
+  root->left->left = malloc(sizeof(Node_bt));
+  root->left->left->data = data1;
+  root->left->left->left = NULL;
+  root->left->left->right = NULL;
+  root->left->right = malloc(sizeof(Node_bt));
+  root->left->right->data = data3;
+  root->left->right->left = NULL;
+  root->left->right->right = NULL;
+  root->right->left = malloc(sizeof(Node_bt));
+  root->right->left->data = data5;
+  root->right->left->left = NULL;
+  root->right->left->right = NULL;
+  root->right->right = malloc(sizeof(Node_bt));
+  root->right->right->data = data10;
+  root->right->right->left = malloc(sizeof(Node_bt));
+  root->right->right->left->left = NULL;
+  root->right->right->left->right = NULL;
+  root->right->right->left->data = data9;
+  root->right->right->right = malloc(sizeof(Node_bt));
+  root->right->right->right->left = NULL;
+  root->right->right->right->right = NULL;
+  root->right->right->right->data = data11;
+  return root;
+}
+
 Test(binary_tree, should_traverse_depth_first) {
   depth_first_traversal(test_tree_1());
 }
@@ -586,15 +804,15 @@ Test(binary_search_tree, should_delete_node_with_no_children) {
 Test(binary_search_tree, should_delete_node_with_one_left_child) {
   Binary_tree *bt = test_search_tree_for_delete_data_6_left();
   int_delete_in_search_tree(bt, 6);
-  cr_expect(int_compare_binary_trees(bt, test_search_tree_deletion_data_6_left()) ==
-            1);
+  cr_expect(int_compare_binary_trees(
+                bt, test_search_tree_deletion_data_6_left()) == 1);
 }
 
 Test(binary_search_tree, should_delete_node_with_one_right_child) {
   Binary_tree *bt = test_search_tree_for_delete_data_6_right();
   int_delete_in_search_tree(bt, 6);
-  cr_expect(int_compare_binary_trees(bt, test_search_tree_deletion_data_6_right()) ==
-            1);
+  cr_expect(int_compare_binary_trees(
+                bt, test_search_tree_deletion_data_6_right()) == 1);
 }
 
 Test(binary_search_tree, should_delete_node_with_two_children) {
@@ -609,4 +827,28 @@ Test(binary_search_tree, should_delete_node_with_two_children_2) {
   int_delete_in_search_tree(bt, 8);
   cr_expect(int_compare_binary_trees(bt, test_search_tree_deletion_data_8()) ==
             1);
+}
+
+Test(binary_search_tree,
+     should_delete_node_with_two_children_2_no_left_child_on_to_remove_left) {
+  Binary_tree *bt = test_search_tree_for_delete_data_8_no_left();
+  int_delete_in_search_tree(bt, 8);
+  cr_expect(int_compare_binary_trees(
+                bt, test_search_tree_deletion_data_8_no_left()) == 1);
+}
+
+Test(binary_search_tree,
+     should_delete_node_with_two_children_2_no_right_child_on_to_remove_left) {
+  Binary_tree *bt = test_search_tree_for_delete_data_8_no_right();
+  printf("----------------------\n");
+  breadth_first_traversal(bt);
+  depth_first_traversal(bt);
+  printf("----------------------\n");
+  int_delete_in_search_tree(bt, 8);
+  printf("----------------------\n");
+  breadth_first_traversal(bt);
+  depth_first_traversal(bt);
+  printf("----------------------\n");
+  cr_expect(int_compare_binary_trees(
+                bt, test_search_tree_deletion_data_8_no_right()) == 1);
 }

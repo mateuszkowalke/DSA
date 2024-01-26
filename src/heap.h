@@ -9,7 +9,7 @@
 
 #define decl_min_heap_type(T) \
     decl_dyn_arr_type(T); \
-    typedef dyn_##T##_arr_t T##_min_heap_t; \
+    typedef T##dyn_arr_t T##_min_heap_t; \
     T##_min_heap_t new_##T##_min_heap() { \
         return (T##_min_heap_t)new_dyn_##T##_arr(64); \
     } \

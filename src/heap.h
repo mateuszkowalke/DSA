@@ -9,9 +9,9 @@
 
 #define decl_min_heap_type(T) \
     decl_dyn_arr_type(T); \
-    typedef T##dyn_arr_t T##_min_heap_t; \
+    typedef T##_dyn_arr_t T##_min_heap_t; \
     T##_min_heap_t new_##T##_min_heap() { \
-        return (T##_min_heap_t)new_dyn_##T##_arr(64); \
+        return (T##_min_heap_t)new_##T##_dyn_arr(64); \
     } \
     int get_left_child_##T##_min_heap(T##_min_heap_t h, size_t parent_i, T *el) { \
         if (parent_i * 2 + 1 >= h.len) { \

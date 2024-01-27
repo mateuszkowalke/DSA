@@ -12,7 +12,7 @@
         size_t len; \
         size_t cap; \
     } T##_dyn_arr_t; \
-    T##_dyn_arr_t new_dyn_##T##_arr(size_t size) { \
+    T##_dyn_arr_t new_##T##_dyn_arr(size_t size) { \
         T *arr = malloc(sizeof(T) * size); \
         if (arr == NULL) { \
             perror("Error reallocating dynamic array(new)"); \

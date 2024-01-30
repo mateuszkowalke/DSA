@@ -74,5 +74,8 @@
         dyn_arr.arr[i] = dyn_arr.arr[j]; \
         dyn_arr.arr[j] = tmp; \
     } \
+    void free_##T##_dyn_arr(T##_dyn_arr_t dyn_arr) { \
+        free(dyn_arr.arr); \
+    } \
 
 #endif

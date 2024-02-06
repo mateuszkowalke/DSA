@@ -1,6 +1,8 @@
 #include "binary_tree.h"
 #include <stdio.h>
 
+decl_queue_type(Node_bt);
+
 void depth_first_traversal(Binary_tree *bt) {
   printf("%d ", *(int *)bt->data);
   if (bt->left != NULL) {
@@ -14,20 +16,16 @@ void depth_first_traversal(Binary_tree *bt) {
 
 void breadth_first_traversal(Binary_tree *bt) {
   int res;
-  Queue *q = new_queue();
-  if ((res = enqueue(q, bt)) == -1) {
-    printf("error");
-  }
-  void *n;
-  while (dequeue(q, &n) != -1) {
-    printf("%d ", *(int *)((Node_bt *)n)->data);
-    if (((Node_bt *)n)->left != NULL) {
-      // TODO error
-      enqueue(q, ((Node_bt *)n)->left);
+  Node_bt_q_t q = new_Node_bt_queue();
+  Node_bt_enqueue(&q, bt);
+  Node_bt *n;
+  while (Node_bt_dequeue(&q, &n)) {
+    printf("%d ", *(int *)n->data);
+    if (n->left != NULL) {
+      Node_bt_enqueue(&q, n->left);
     }
-    if (((Node_bt *)n)->right != NULL) {
-      // TODO error
-      enqueue(q, ((Node_bt *)n)->right);
+    if (n->right != NULL) {
+      Node_bt_enqueue(&q, n->right);
     }
   }
   printf("\n");

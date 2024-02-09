@@ -2,6 +2,10 @@
 
 #include "../src/graph.h"
 
+int same_func(const int el1, const int el2) {
+    return el1 == el2;
+}
+
 decl_graph_type(int);
 
 Test(graph, should_create_new_graph_without_errors) {
@@ -56,4 +60,18 @@ Test(graph, should_add_edges_to_vertex) {
   add_int_edge_al(&al, v1, v2, 10);
   cr_expect(al.arr[0].edges.arr[0].weight == 10);
   cr_expect(al.arr[0].edges.arr[0].next == v2);
+}
+
+Test(graph, should_perform_bfs) {
+  int_al_t al = new_int_al();
+  size_t v1 = add_int_vertex_al(&al, 1);
+  size_t v2 = add_int_vertex_al(&al, 2);
+  size_t v3 = add_int_vertex_al(&al, 3);
+  size_t v4 = add_int_vertex_al(&al, 4);
+  add_int_edge_al(&al, v1, v2, 10);
+  add_int_edge_al(&al, v1, v3, 10);
+  add_int_edge_al(&al, v2, v3, 10);
+  add_int_edge_al(&al, v2, v4, 10);
+  add_int_edge_al(&al, v3, v4, 10);
+  bfs_int_al(al, 0, 4, same_func);
 }

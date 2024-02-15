@@ -15,7 +15,7 @@
     T##_dyn_arr_t new_##T##_dyn_arr(size_t size) { \
         T *arr = malloc(sizeof(T) * size); \
         if (arr == NULL) { \
-            perror("Error reallocating dynamic array(new)"); \
+            perror("Error allocating dynamic array(new)"); \
             exit(1); \
         } \
         return (T##_dyn_arr_t){.arr = arr, .len = 0, .cap = size}; \
@@ -73,6 +73,16 @@
         T tmp = dyn_arr.arr[i]; \
         dyn_arr.arr[i] = dyn_arr.arr[j]; \
         dyn_arr.arr[j] = tmp; \
+    } \
+    bool includes_##T(T##_dyn_arr_t dyn_arr, T el, bool (*same) (const T el1, const T el2)) { \
+        bool incl = false; \
+        for (size_t i = 0; i < dyn_arr.len; i++) { \
+            if (same(el, dyn_arr.arr[i])) { \
+                incl = true; \
+                break; \
+            } \
+        } \
+        return incl; \
     } \
     void free_##T##_dyn_arr(T##_dyn_arr_t dyn_arr) { \
         free(dyn_arr.arr); \

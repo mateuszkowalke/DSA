@@ -2,9 +2,7 @@
 
 #include "../src/graph.h"
 
-int same_func(const int el1, const int el2) {
-    return el1 == el2;
-}
+bool same_func(const int el1, const int el2) { return el1 == el2; }
 
 decl_graph_type(int);
 
@@ -58,6 +56,7 @@ Test(graph, should_add_edges_to_vertex) {
   size_t v1 = add_int_vertex_al(&al, 1);
   size_t v2 = add_int_vertex_al(&al, 2);
   add_int_edge_al(&al, v1, v2, 10);
+  cr_expect(al.arr[0].edges.len == 1);
   cr_expect(al.arr[0].edges.arr[0].weight == 10);
   cr_expect(al.arr[0].edges.arr[0].next == v2);
 }
@@ -73,5 +72,8 @@ Test(graph, should_perform_bfs) {
   add_int_edge_al(&al, v2, v3, 10);
   add_int_edge_al(&al, v2, v4, 10);
   add_int_edge_al(&al, v3, v4, 10);
-  bfs_int_al(al, 0, 4, same_func);
+  size_t_dyn_arr_t path = bfs_int_al(al, 0, 4, same_func);
+  for (int i = 0; i < path.len; i++) {
+    printf("idx: %ld\n", path.arr[i]);
+  }
 }

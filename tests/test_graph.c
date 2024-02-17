@@ -73,7 +73,4 @@ Test(graph, should_perform_bfs) {
   add_int_edge_al(&al, v2, v4, 10);
   add_int_edge_al(&al, v3, v4, 10);
   size_t_dyn_arr_t path = bfs_int_al(al, 0, 4, same_func);
-  for (int i = 0; i < path.len; i++) {
-    printf("idx: %ld\n", path.arr[i]);
-  }
 }

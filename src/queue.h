@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #ifndef QUEUE
 #define QUEUE
@@ -20,14 +21,10 @@
         size_t len; \
     } T##_q_t; \
     T##_q_t new_##T##_queue() { \
-        T##_q_t *q = malloc(sizeof(T##_q_t)); \
-        if (q == NULL) { \
-            perror("Error allocatiing queue(new_##T##_queue)"); \
-            exit(1); \
-        } \
-        q->head = q->tail = NULL; \
-        q->len = 0; \
-        return *q; \
+        T##_q_t q; \
+        q.head = q.tail = NULL; \
+        q.len = 0; \
+        return q; \
     } \
     void T##_enqueue(T##_q_t *q, T *data) { \
         node_##T##_q_t *n; \
@@ -35,7 +32,11 @@
             perror("Error allocatiing queue node(enqueue)"); \
             exit(1); \
         } \
-        n->data = data; \
+        if ((n->data = malloc(sizeof(T))) == NULL) { \
+            perror("Error allocatiing queue node data(enqueue)"); \
+            exit(1); \
+        } \
+        memcpy(n->data, data, sizeof(T)); \
         n->next = NULL; \
         if (q->head == NULL) { \
             q->head = q->tail = n; \
@@ -45,22 +46,23 @@
         } \
         q->len++; \
     } \
-    int T##_dequeue(T##_q_t *q, T **data) { \
+    int T##_dequeue(T##_q_t *q, T *data) { \
         if (q->head == NULL) { \
             return 0; \
         } \
         node_##T##_q_t *n = q->head; \
         q->head = q->head->next; \
         q->len--; \
-        *data = n->data; \
+        memcpy(data, n->data, sizeof(T)); \
+        free(n->data); \
         free(n); \
         return 1; \
     } \
-    int T##_peek(T##_q_t q, T **data) { \
+    int T##_peek(T##_q_t q, T *data) { \
         if (q.head == NULL) { \
             return 0; \
         } \
-        *data = q.head->data; \
+        memcpy(data, q.head->data, sizeof(T)); \
         return 1; \
     } \
 

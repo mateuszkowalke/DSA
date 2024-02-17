@@ -18,8 +18,8 @@ void breadth_first_traversal(Binary_tree *bt) {
   int res;
   Node_bt_q_t q = new_Node_bt_queue();
   Node_bt_enqueue(&q, bt);
-  Node_bt *n;
-  while (Node_bt_dequeue(&q, &n)) {
+  Node_bt *n = malloc(sizeof(Node_bt));
+  while (Node_bt_dequeue(&q, n)) {
     printf("%d ", *(int *)n->data);
     if (n->left != NULL) {
       Node_bt_enqueue(&q, n->left);

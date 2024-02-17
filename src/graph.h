@@ -71,7 +71,7 @@ typedef struct {
         push_size_t(&seen, start_idx); \
         size_t_q_t q = new_size_t_queue(); \
         size_t_enqueue(&q, &start_idx); \
-        while (size_t_dequeue(&q, &curr_idx_p)) { \
+        while (size_t_dequeue(&q, curr_idx_p)) { \
             *curr_p = T##_al_vertex_t_at(al, *curr_idx_p); \
             if (same(target, curr_p->data)) { \
                 break; \
@@ -84,9 +84,6 @@ typedef struct {
                     size_t_enqueue(&q, &e.next); \
                 } \
             } \
-        } \
-        for (size_t i = 0; i < al.len; i++) { \
-            printf("prevs[%d]: %ld\n", i, prevs[i]); \
         } \
         while (prevs[*curr_idx_p] != -1) { \
             push_size_t(&path, *curr_idx_p); \

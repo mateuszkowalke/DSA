@@ -61,7 +61,7 @@ Test(graph, should_add_edges_to_vertex) {
   cr_expect(al.arr[0].edges.arr[0].next == v2);
 }
 
-Test(graph, should_perform_bfs) {
+Test(graph, should_perform_bfs_1) {
   int_al_t al = new_int_al();
   size_t v1 = add_int_vertex_al(&al, 1);
   size_t v2 = add_int_vertex_al(&al, 2);
@@ -73,4 +73,86 @@ Test(graph, should_perform_bfs) {
   add_int_edge_al(&al, v2, v4, 10);
   add_int_edge_al(&al, v3, v4, 10);
   size_t_dyn_arr_t path = bfs_int_al(al, 0, 4, same_func);
+  cr_expect(path.arr[0] == 1);
+  cr_expect(path.arr[1] == 3);
 }
+
+Test(graph, should_perform_bfs_2) {
+  int_al_t al = new_int_al();
+  size_t v1 = add_int_vertex_al(&al, 1);
+  size_t v2 = add_int_vertex_al(&al, 2);
+  size_t v3 = add_int_vertex_al(&al, 3);
+  size_t v4 = add_int_vertex_al(&al, 4);
+  add_int_edge_al(&al, v1, v3, 10);
+  add_int_edge_al(&al, v2, v3, 10);
+  add_int_edge_al(&al, v2, v4, 10);
+  add_int_edge_al(&al, v3, v4, 10);
+  size_t_dyn_arr_t path = bfs_int_al(al, 0, 4, same_func);
+  cr_expect(path.arr[0] == 2);
+  cr_expect(path.arr[1] == 3);
+}
+
+Test(graph, should_perform_bfs_3) {
+  int_al_t al = new_int_al();
+  size_t v1 = add_int_vertex_al(&al, 1);
+  size_t v2 = add_int_vertex_al(&al, 2);
+  size_t v3 = add_int_vertex_al(&al, 3);
+  size_t v4 = add_int_vertex_al(&al, 4);
+  add_int_edge_al(&al, v1, v2, 10);
+  add_int_edge_al(&al, v1, v3, 10);
+  add_int_edge_al(&al, v3, v4, 10);
+  size_t_dyn_arr_t path = bfs_int_al(al, 0, 4, same_func);
+  cr_expect(path.arr[0] == 2);
+  cr_expect(path.arr[1] == 3);
+}
+
+Test(graph, should_perform_dfs_1) {
+  int_al_t al = new_int_al();
+  size_t v1 = add_int_vertex_al(&al, 1);
+  size_t v2 = add_int_vertex_al(&al, 2);
+  size_t v3 = add_int_vertex_al(&al, 3);
+  size_t v4 = add_int_vertex_al(&al, 4);
+  add_int_edge_al(&al, v1, v3, 10);
+  add_int_edge_al(&al, v1, v2, 10);
+  add_int_edge_al(&al, v2, v3, 10);
+  add_int_edge_al(&al, v2, v4, 10);
+  add_int_edge_al(&al, v3, v4, 10);
+  size_t_dyn_arr_t path = dfs_int_al(al, 0, 4, same_func);
+  cr_expect(path.arr[0] == 0);
+  cr_expect(path.arr[1] == 2);
+  cr_expect(path.arr[2] == 3);
+}
+
+Test(graph, should_perform_dfs_2) {
+  int_al_t al = new_int_al();
+  size_t v1 = add_int_vertex_al(&al, 1);
+  size_t v2 = add_int_vertex_al(&al, 2);
+  size_t v3 = add_int_vertex_al(&al, 3);
+  size_t v4 = add_int_vertex_al(&al, 4);
+  add_int_edge_al(&al, v1, v2, 10);
+  add_int_edge_al(&al, v1, v3, 10);
+  add_int_edge_al(&al, v2, v3, 10);
+  add_int_edge_al(&al, v2, v4, 10);
+  add_int_edge_al(&al, v3, v4, 10);
+  size_t_dyn_arr_t path = dfs_int_al(al, 0, 4, same_func);
+  cr_expect(path.arr[0] == 0);
+  cr_expect(path.arr[1] == 1);
+  cr_expect(path.arr[2] == 2);
+  cr_expect(path.arr[3] == 3);
+}
+
+Test(graph, should_perform_dfs_3) {
+  int_al_t al = new_int_al();
+  size_t v1 = add_int_vertex_al(&al, 1);
+  size_t v2 = add_int_vertex_al(&al, 2);
+  size_t v3 = add_int_vertex_al(&al, 3);
+  size_t v4 = add_int_vertex_al(&al, 4);
+  add_int_edge_al(&al, v1, v2, 10);
+  add_int_edge_al(&al, v1, v3, 10);
+  add_int_edge_al(&al, v3, v4, 10);
+  size_t_dyn_arr_t path = dfs_int_al(al, 0, 4, same_func);
+  cr_expect(path.arr[0] == 0);
+  cr_expect(path.arr[1] == 2);
+  cr_expect(path.arr[2] == 3);
+}
+

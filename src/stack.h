@@ -1,14 +1,25 @@
-#include <stdlib.h>
+#include "dyn_arr.h"
 
-typedef struct Node {
-  int data;
-  struct Node *next;
-} Node;
+#ifndef STACK
+#define STACK
 
-typedef struct Stack {
-  struct Node *top;
-} Stack;
+#define decl_stack_type(T) \
+    decl_dyn_arr_type(T); \
+    typedef T##_dyn_arr_t T##_s_t; \
+    T##_s_t new_##T##_stack() { \
+        return new_##T##_dyn_arr(16); \
+    } \
+    void push_##T##_s(T##_s_t *s, T data) { \
+        push_##T(s, data); \
+    } \
+    T pop_##T##_s(T##_s_t *s) { \
+        return pop_##T(s); \
+    } \
+    T *peek_##T##_s(T##_s_t s) { \
+        if (s.len == 0) { \
+            return NULL; \
+        } \
+        return &s.arr[s.len - 1]; \
+    } \
 
-void push(Stack *s, int data);
-Node *pop(Stack *s);
-int peek_stack(Stack *s);
+#endif

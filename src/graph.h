@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "dyn_arr.h"
 #include "queue.h"
+#include "stack.h"
 
 #ifndef GRAPH
 #define GRAPH
@@ -22,7 +23,7 @@ typedef struct {
 // same function returns 1 when vertex values are equal and 0 when not
 #define decl_graph_type(T) \
     decl_dyn_arr_type(al_edge_t); \
-    decl_dyn_arr_type(size_t); \
+    decl_stack_type(size_t); \
     typedef struct { \
         T data; \
         al_edge_t_dyn_arr_t edges; \
@@ -90,7 +91,41 @@ typedef struct {
             *curr_idx_p = prevs[*curr_idx_p]; \
         } \
         free(prevs); \
+        for (size_t i = 0; i < path.len / 2; i++) { \
+            size_t tmp = path.arr[i]; \
+            path.arr[i] = path.arr[path.len - 1 - i]; \
+            path.arr[path.len - 1 -i] = tmp; \
+        } \
         return path; \
+    } \
+    size_t_dyn_arr_t dfs_##T##_al(T##_al_t al, size_t start_idx, T target, bool (*same) (const T el1, const T el2)) { \
+        size_t *curr_idx; \
+        T##_al_vertex_t curr; \
+        size_t_dyn_arr_t seen = new_size_t_dyn_arr(16); \
+        size_t_s_t s = new_size_t_stack(); \
+        push_size_t_s(&s, start_idx); \
+        while((curr_idx = peek_size_t_s(s)) != NULL) { \
+            curr = T##_al_vertex_t_at(al, *curr_idx); \
+            if (same(target, curr.data)) { \
+                push_size_t_s(&s, *curr_idx); \
+                return s; \
+            } \
+            if (!includes_size_t(seen, *curr_idx, same_size_t)) { \
+                push_size_t(&seen, *curr_idx); \
+            } \
+            bool pushed = false; \
+            for (size_t i = 0; i < curr.edges.len; i++) { \
+                if (!includes_size_t(seen, curr.edges.arr[i].next, same_size_t)) { \
+                    push_size_t_s(&s, curr.edges.arr[i].next); \
+                    pushed = true; \
+                    break; \
+                } \
+            } \
+            if (!pushed) { \
+                pop_size_t(&s); \
+            } \
+        } \
+        return s; \
     } \
 
 #endif

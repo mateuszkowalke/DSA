@@ -1,7 +1,9 @@
 #include <criterion/criterion.h>
 
 #include "../src/stack.h"
+#include "../src/dyn_arr.h"
 
+decl_dyn_arr_type(int);
 decl_stack_type(int);
 
 Test(stack, should_properly_enqueue_new_data) {

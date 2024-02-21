@@ -1,9 +1,8 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <limits.h>
 #include "dyn_arr.h"
-#include "queue.h"
-#include "stack.h"
 
 #ifndef GRAPH
 #define GRAPH
@@ -16,28 +15,31 @@ typedef struct {
     // next represents an index of the target vertex in the adjacency list
     size_t next;
     // weight represents the edge weight
-    int weight;
+    uint weight;
 } al_edge_t;
 
+// graph needs dyn_arr to be declared for types al_edge_t and size_t
+// and stack and queue to be declared for size_t type
 // nodes are identified by their index in the adjacency list
 // same function returns 1 when vertex values are equal and 0 when not
+// dfs returns start_ids as its first path element
+// bfs does not return start_ids as its first path element
 #define decl_graph_type(T) \
-    decl_dyn_arr_type(al_edge_t); \
-    decl_stack_type(size_t); \
     typedef struct { \
+        size_t idx; \
         T data; \
         al_edge_t_dyn_arr_t edges; \
         bool deleted; \
     } T##_al_vertex_t; \
     decl_dyn_arr_type(T##_al_vertex_t); \
-    decl_queue_type(size_t); \
+    decl_min_heap_type(T##_al_vertex_t); \
     typedef T##_al_vertex_t_dyn_arr_t T##_al_t; \
     T##_al_t new_##T##_al() { \
         return (T##_al_t)new_##T##_al_vertex_t_dyn_arr(64); \
     } \
     size_t add_##T##_vertex_al(T##_al_t *al, T data) { \
         al_edge_t_dyn_arr_t edges = (al_edge_t_dyn_arr_t)new_al_edge_t_dyn_arr(4); \
-        T##_al_vertex_t v = (T##_al_vertex_t){.data = data, .edges = edges, .deleted = false}; \
+        T##_al_vertex_t v = (T##_al_vertex_t){.idx = al->len, .data = data, .edges = edges, .deleted = false}; \
         push_##T##_al_vertex_t(al, v); \
         return al->len - 1; \
     } \
@@ -126,6 +128,49 @@ typedef struct {
             } \
         } \
         return s; \
+    } \
+    size_t_dyn_arr_t dijkstra_##T##_al(T##_al_t al, size_t start_idx, size_t target_idx) { \
+        T##_al_vertex_t curr; \
+        uint *dists = malloc(sizeof(uint) * al.len); \
+        uint *prevs = malloc(sizeof(uint) * al.len); \
+        for (size_t i = 0; i < al.len; i++) { \
+            dists[i] = UINT_MAX; \
+        } \
+        dists[start_idx] = 0; \
+        T##_al_vertex_t_min_heap_t h = new_##T##_al_vertex_t_min_heap(); \
+        push_##T##_al_vertex_t_min_heap(&h, start_idx); \
+        while(pop_##T##_al_vertex_t_min_heap(&h, &curr)) { \
+            curr_idx = curr.idx; \
+            printf("visiting: %ld\n", curr_idx); \
+            for (size_t i = 0; i < curr.edges.len; i++) { \
+                size_t next = curr.edges.arr[i].next; \
+                printf("checking: %ld\n", next); \
+                size_t next_weight = curr.edges.arr[i].weight; \
+                if (dists[next] > dists[curr_idx] + next_weight) { \
+                    dists[next] = dists[curr_idx] + next_weight; \
+                    prevs[next] = curr_idx; \
+                    printf("adding: %ld\n", next); \
+                    push_##T##_al_vertex_t_min_heap(&h, next); \
+                } \
+            } \
+        } \
+        size_t_dyn_arr_t path = new_size_t_dyn_arr(8); \
+        if (dists[target_idx] == UINT_MAX) { \
+            return path; \
+        } \
+        push_size_t(&path, target_idx); \
+        while (target_idx != start_idx) { \
+            push_size_t(&path, prevs[target_idx]); \
+            target_idx = prevs[target_idx]; \
+        } \
+        free(dists); \
+        free(prevs); \
+        for (size_t i = 0; i < path.len / 2; i++) { \
+            size_t tmp = path.arr[i]; \
+            path.arr[i] = path.arr[path.len - 1 - i]; \
+            path.arr[path.len - 1 -i] = tmp; \
+        } \
+        return path; \
     } \
 
 #endif

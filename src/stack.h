@@ -1,10 +1,8 @@
-#include "dyn_arr.h"
-
 #ifndef STACK
 #define STACK
 
+// stack needs dyn_arr for type T to be declared by caller
 #define decl_stack_type(T) \
-    decl_dyn_arr_type(T); \
     typedef T##_dyn_arr_t T##_s_t; \
     T##_s_t new_##T##_stack() { \
         return new_##T##_dyn_arr(16); \

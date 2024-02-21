@@ -7,8 +7,9 @@
 #ifndef HEAP
 #define HEAP
 
+// TODO - add update function (takes T, finds node using 'same' function and update it's placing if needed)
+// heap needs dyn_arr for type T to be declared by caller
 #define decl_min_heap_type(T) \
-    decl_dyn_arr_type(T); \
     typedef T##_dyn_arr_t T##_min_heap_t; \
     T##_min_heap_t new_##T##_min_heap() { \
         return (T##_min_heap_t)new_##T##_dyn_arr(64); \
@@ -37,11 +38,17 @@
             j = i < 2 ? 0 : (i - 1) / 2; \
         } \
     } \
-    T pop_##T##_min_heap(T##_min_heap_t *h) { \
-        if (h->len == 1) { \
-            return pop_##T(h); \
+    bool pop_##T##_min_heap(T##_min_heap_t *h, T* data) { \
+        if (h->len == 0) { \
+            return false; \
         } \
-        T res = T##_at(*h, 0); \
+        T res; \
+        if (h->len == 1) { \
+            res = pop_##T(h); \
+            memcpy(data, &res, sizeof(T)); \
+            return true; \
+        } \
+        res = T##_at(*h, 0); \
         insert_##T##_at(*h, 0, pop_##T(h)); \
         size_t parent_i = 0; \
         T left, right; \
@@ -59,7 +66,8 @@
                 parent_i = parent_i * 2 + 1; \
             } \
         } \
-        return res; \
+        memcpy(data, &res, sizeof(T)); \
+        return true; \
     } \
 
 #endif

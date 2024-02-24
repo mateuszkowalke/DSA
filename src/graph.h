@@ -18,6 +18,22 @@ typedef struct {
     uint weight;
 } al_edge_t;
 
+typedef struct { \
+    size_t idx; \
+    uint *dist; \
+} vertex_dist_t; \
+int cmp_vertex_dist_t(const vertex_dist_t *v1, const vertex_dist_t *v2) {
+    if (*v1->dist < *v2->dist) {
+        return -1;
+    } else if (*v1->dist > *v2->dist) {
+        return 1;
+    } else {
+        return 1;
+    }
+}
+
+decl_dyn_arr_type(vertex_dist_t);
+decl_min_heap_type(vertex_dist_t);
 // graph needs dyn_arr to be declared for types al_edge_t and size_t
 // and stack and queue to be declared for size_t type
 // nodes are identified by their index in the adjacency list
@@ -32,7 +48,6 @@ typedef struct {
         bool deleted; \
     } T##_al_vertex_t; \
     decl_dyn_arr_type(T##_al_vertex_t); \
-    decl_min_heap_type(T##_al_vertex_t); \
     typedef T##_al_vertex_t_dyn_arr_t T##_al_t; \
     T##_al_t new_##T##_al() { \
         return (T##_al_t)new_##T##_al_vertex_t_dyn_arr(64); \
@@ -130,27 +145,25 @@ typedef struct {
         return s; \
     } \
     size_t_dyn_arr_t dijkstra_##T##_al(T##_al_t al, size_t start_idx, size_t target_idx) { \
-        T##_al_vertex_t curr; \
+        T##_al_vertex_t curr_vertex; \
+        vertex_dist_t curr; \
         uint *dists = malloc(sizeof(uint) * al.len); \
         uint *prevs = malloc(sizeof(uint) * al.len); \
         for (size_t i = 0; i < al.len; i++) { \
             dists[i] = UINT_MAX; \
         } \
         dists[start_idx] = 0; \
-        T##_al_vertex_t_min_heap_t h = new_##T##_al_vertex_t_min_heap(); \
-        push_##T##_al_vertex_t_min_heap(&h, start_idx); \
-        while(pop_##T##_al_vertex_t_min_heap(&h, &curr)) { \
-            curr_idx = curr.idx; \
-            printf("visiting: %ld\n", curr_idx); \
-            for (size_t i = 0; i < curr.edges.len; i++) { \
-                size_t next = curr.edges.arr[i].next; \
-                printf("checking: %ld\n", next); \
-                size_t next_weight = curr.edges.arr[i].weight; \
-                if (dists[next] > dists[curr_idx] + next_weight) { \
-                    dists[next] = dists[curr_idx] + next_weight; \
-                    prevs[next] = curr_idx; \
-                    printf("adding: %ld\n", next); \
-                    push_##T##_al_vertex_t_min_heap(&h, next); \
+        vertex_dist_t_min_heap_t h = new_vertex_dist_t_min_heap(); \
+        push_vertex_dist_t_min_heap(&h, (vertex_dist_t){.idx = start_idx, .dist = &dists[start_idx]}, cmp_vertex_dist_t); \
+        while(pop_vertex_dist_t_min_heap(&h, &curr, cmp_vertex_dist_t)) { \
+            curr_vertex = T##_al_vertex_t_at(al, curr.idx); \
+            for (size_t i = 0; i < curr_vertex.edges.len; i++) { \
+                size_t next = curr_vertex.edges.arr[i].next; \
+                size_t next_weight = curr_vertex.edges.arr[i].weight; \
+                if (dists[next] > dists[curr_vertex.idx] + next_weight) { \
+                    dists[next] = dists[curr_vertex.idx] + next_weight; \
+                    prevs[next] = curr_vertex.idx; \
+                    push_vertex_dist_t_min_heap(&h, (vertex_dist_t){.idx = next, .dist = &dists[next]}, cmp_vertex_dist_t); \
                 } \
             } \
         } \

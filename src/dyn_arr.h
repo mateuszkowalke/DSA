@@ -15,7 +15,7 @@
     T##_dyn_arr_t new_##T##_dyn_arr(size_t size) { \
         T *arr = malloc(sizeof(T) * size); \
         if (arr == NULL) { \
-            perror("Error allocating dynamic array(new)"); \
+            perror("Error allocating dynamic array(new)\n"); \
             exit(1); \
         } \
         return (T##_dyn_arr_t){.arr = arr, .len = 0, .cap = size}; \
@@ -26,7 +26,7 @@
             dyn_arr->cap *= 2; \
             dyn_arr->arr = realloc(dyn_arr->arr, sizeof(T) * dyn_arr->cap); \
             if (dyn_arr->arr == NULL) { \
-                perror("Error reallocating dynamic array(push)"); \
+                perror("Error reallocating dynamic array(push)\n"); \
                 exit(1); \
             } \
         } \
@@ -41,7 +41,7 @@
             dyn_arr->cap /= 2; \
             dyn_arr->arr = realloc(dyn_arr->arr, sizeof(T) * dyn_arr->cap); \
             if (dyn_arr->arr == NULL) { \
-                perror("Error reallocating dynamic array(pop)"); \
+                perror("Error reallocating dynamic array(pop)\n"); \
                 exit(1); \
             } \
         } \

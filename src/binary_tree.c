@@ -15,7 +15,6 @@ void depth_first_traversal(Binary_tree *bt) {
 }
 
 void breadth_first_traversal(Binary_tree *bt) {
-  int res;
   Node_bt_q_t q = new_Node_bt_queue();
   Node_bt_enqueue(&q, bt);
   Node_bt *n = malloc(sizeof(Node_bt));

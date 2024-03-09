@@ -71,7 +71,6 @@ decl_min_heap_type(vertex_dist_t);
     size_t_dyn_arr_t bfs_##T##_al(T##_al_t al, size_t start_idx, T target, bool (*same) (const T el1, const T el2)) { \
         size_t_dyn_arr_t path = new_size_t_dyn_arr(16); \
         T##_al_vertex_t curr = T##_al_vertex_t_at(al, start_idx); \
-        T##_al_vertex_t tmp; \
         T##_al_vertex_t *curr_p = &curr; \
         size_t *curr_idx_p = &start_idx; \
         if (same(target, curr.data)) { \

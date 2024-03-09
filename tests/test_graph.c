@@ -18,7 +18,7 @@ decl_queue_type(size_t);
 decl_graph_type(int);
 
 Test(graph, should_create_new_graph_without_errors) {
-  int_al_t al = new_int_al();
+  new_int_al();
 }
 
 Test(graph,

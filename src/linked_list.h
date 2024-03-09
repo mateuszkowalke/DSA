@@ -106,26 +106,31 @@
     } \
     void T##_remove_node_sll(T##_sll_t *sll, T##_node_sll_t *curr, T##_node_sll_t *prev) { \
         sll->size--; \
-        if (curr == ll->head) { \
-            ll->head = curr->next; \
+        if (curr == sll->head) { \
+            T##_node_sll_t *tmp = sll->head; \
+            sll->head = curr->next; \
+            free(tmp); \
             return; \
         } \
-        if (curr == ll->tail) { \
-            ll->tail = prev; \
-            ll->tail->next = NULL; \
+        if (curr == sll->tail) { \
+            free(sll->tail); \
+            sll->tail = prev; \
+            sll->tail->next = NULL; \
             return; \
         } \
+        T##_node_sll_t *tmp = prev->next; \
         prev->next = curr->next; \
+        free(tmp); \
         return; \
     } \
-    int T##_remove_sll(T##_sll_t *sll, T##_node_sll_t *node) { \
+    int T##_remove_sll(T##_sll_t *sll, T data) { \
         if (sll->head == NULL) { \
             return -1; \
         } \
         T##_node_sll_t *curr = sll->head; \
         T##_node_sll_t *prev = NULL; \
         while (curr != NULL) { \
-            if (curr->data == node->data) { \
+            if (curr->data == data) { \
                 T##_remove_node_sll(sll, curr, prev); \
                 return 0; \
             } \
@@ -135,6 +140,13 @@
         return -1; \
     } \
     int T##_remove_at_sll(T##_sll_t *sll, size_t i) { \
+        if (sll->size == 0) { \
+            return -1; \
+        } \
+        if (i == 0) { \
+            T##_remove_node_sll(sll, sll->head, NULL); \
+            return 0; \
+        } \
         T##_node_sll_t *prev = T##_get_prev_at_sll(*sll, i); \
         if (prev == NULL) { \
             return -1; \
@@ -152,24 +164,5 @@
     } \
 
 #define decl_doubly_linked_list_type(T) \
-
-typedef struct Node {
-  void *data;
-  struct Node *next;
-} Node_ll;
-
-typedef struct {
-  size_t size;
-  Node_ll *head;
-  Node_ll *tail;
-} Linked_list;
-
-Linked_list *new_ll();
-int insert_at_ll(Linked_list *ll, void *data, size_t i);
-int append_ll(Linked_list *ll, void *data);
-int prepend_ll(Linked_list *ll, void *data);
-int remove_ll(Linked_list *ll, Node_ll *node);
-int remove_at_ll(Linked_list *ll, size_t i);
-void *get(Linked_list *ll, size_t i);
 
 #endif

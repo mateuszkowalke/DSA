@@ -50,6 +50,7 @@
             exit(1); \
         } \
         new_node->data = data; \
+        new_node->next = NULL; \
         if (i == 0 && sll->size == 0) { \
             sll->size++; \
             sll->head = new_node; \
@@ -59,6 +60,11 @@
             sll->size++; \
             new_node->next = sll->head; \
             sll->head = new_node; \
+            return; \
+        } else if (i == sll->size) { \
+            sll->size++; \
+            sll->tail->next = new_node; \
+            sll->tail = new_node; \
             return; \
         } \
         T##_node_sll_t *prev = T##_get_prev_at_sll(*sll, i); \
@@ -82,6 +88,7 @@
             exit(1); \
         } \
         new_node->data = data; \
+        new_node->next = NULL; \
         if (sll->size == 0) { \
             sll->head = new_node; \
             sll->tail = new_node; \
@@ -98,6 +105,7 @@
             exit(1); \
         } \
         new_node->data = data; \
+        new_node->next = NULL; \
         if (sll->size == 0) { \
             sll->head = new_node; \
             sll->tail = new_node; \
@@ -202,6 +210,8 @@
             exit(1); \
         } \
         new_node->data = data; \
+        new_node->next = NULL; \
+        new_node->prev = NULL; \
         if (i == 0 && dll->size == 0) { \
             dll->size++; \
             dll->head = new_node; \
@@ -212,6 +222,12 @@
             new_node->next = dll->head; \
             dll->head = new_node; \
             dll->head->next->prev = dll->head; \
+            return; \
+        } else if (i == dll->size) { \
+            dll->size++; \
+            new_node->prev = dll->tail; \
+            dll->tail = new_node; \
+            dll->tail->prev->next = dll->tail; \
             return; \
         } \
         T##_node_dll_t *curr = T##_get_node_at_dll(*dll, i); \
@@ -238,6 +254,8 @@
             exit(1); \
         } \
         new_node->data = data; \
+        new_node->next = NULL; \
+        new_node->prev = NULL; \
         if (dll->size == 0) { \
             dll->head = new_node; \
             dll->tail = new_node; \
@@ -255,6 +273,8 @@
             exit(1); \
         } \
         new_node->data = data; \
+        new_node->next = NULL; \
+        new_node->prev = NULL; \
         if (dll->size == 0) { \
             dll->head = new_node; \
             dll->tail = new_node; \
@@ -316,6 +336,36 @@
     T T##_get_at_dll(T##_dll_t dll, size_t i) { \
         return T##_get_node_at_dll(dll, i)->data; \
     } \
-
+    void T##_swap_dll(T##_dll_t *dll, T##_node_dll_t *n1, T##_node_dll_t *n2) { \
+        T##_node_dll_t tmp; \
+        if (dll->head == n1) { \
+            dll->head = n2; \
+        } else if (dll->head == n2) { \
+            dll->head = n1; \
+        } \
+        if (dll->tail == n2) { \
+            dll->tail = n1; \
+        } else if (dll->tail == n1) { \
+            dll->tail = n2; \
+        } \
+        tmp.next = n2->next == n1 ? n2 : n2->next; \
+        tmp.prev = n2->prev == n1 ? n2 : n2->prev; \
+        n2->next = n1->next == n2 ? n1 : n1->next; \
+        n2->prev = n1->prev == n2 ? n1 : n1->prev; \
+        n1->next = tmp.next; \
+        n1->prev = tmp.prev; \
+        if (n1->next != NULL) { \
+            n1->next->prev = n1; \
+        } \
+        if (n1->prev != NULL) { \
+            n1->prev->next = n1; \
+        } \
+        if (n2->next != NULL) { \
+            n2->next->prev = n2; \
+        } \
+        if (n2->prev != NULL) { \
+            n2->prev->next = n2; \
+        } \
+    } \
 
 #endif

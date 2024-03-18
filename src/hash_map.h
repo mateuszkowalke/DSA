@@ -46,19 +46,16 @@ size_t default_hash_func(const char *key, size_t map_size) {
         while (hm->dyn_arr.arr[idx + offset - 1].key != NULL) { \
             offset *= 2; \
         } \
-        hm->dyn_arr.arr[idx] = (T##_hash_map_entry_t){.key = key_cpy, .val = item}; \
+        hm->dyn_arr.arr[idx + offset - 1] = (T##_hash_map_entry_t){.key = key_cpy, .val = item}; \
     } \
     T *get_##T##_hash_map(T##_hash_map_t hm, const char *key) { \
         size_t idx = hm.hash_func(key, hm.dyn_arr.cap); \
         size_t offset = 1; \
-        T##_hash_map_entry_t e; \
-        while ((e = hm.dyn_arr.arr[idx + offset - 1]).key != NULL && strcmp(e.key, key) != 0) { \
+        T##_hash_map_entry_t *e; \
+        while ((e = &hm.dyn_arr.arr[idx + offset - 1])->key != NULL && strcmp(e->key, key) != 0) { \
             offset *= 2; \
         } \
-        if (hm.dyn_arr.arr[idx].key == NULL) { \
-            return NULL; \
-        } \
-        return e.key == NULL ? NULL : &e.val; \
+        return e->key == NULL ? NULL : &e->val; \
     } \
     void delete_##T##_hash_map(T##_hash_map_t *hm, const char *key) { \
         size_t idx = hm->hash_func(key, hm->dyn_arr.cap); \
